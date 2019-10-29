@@ -1,3 +1,4 @@
+const GPIO = require('pigpio').GPIO
 const fetch = require('node-fetch')
 require('dotenv').config()
 
@@ -16,3 +17,16 @@ const getWeather = async () =>{
 }
 
 getWeather()
+
+const led = new Gpio(17, {mode: Gpio.OUTPUT});
+
+let dutyCycle = 0;
+
+setInterval(() => {
+  led.pwmWrite(dutyCycle);
+
+  dutyCycle += 5;
+  if (dutyCycle > 255) {
+    dutyCycle = 0;
+  }
+}, 20);
