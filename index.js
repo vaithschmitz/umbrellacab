@@ -1,4 +1,4 @@
-const GPIO = require('pigpio').GPIO
+const Gpio = require('onoff').Gpio
 const fetch = require('node-fetch')
 require('dotenv').config()
 
@@ -18,15 +18,14 @@ const getWeather = async () =>{
 
 getWeather()
 
-const led = new Gpio(17, {mode: Gpio.OUTPUT});
+const Gpio = require('../onoff').Gpio; // Gpio class
+const led = new Gpio(17, 'out');       // Export GPIO17 as an output
 
-let dutyCycle = 0;
+// Toggle the state of the LED connected to GPIO17 every 200ms
+const iv = setInterval(_ => led.writeSync(led.readSync() ^ 1), 200);
 
-setInterval(() => {
-  led.pwmWrite(dutyCycle);
-
-  dutyCycle += 5;
-  if (dutyCycle > 255) {
-    dutyCycle = 0;
-  }
-}, 20);
+// Stop blinking the LED after 5 seconds
+setTimeout(_ => {
+  clearInterval(iv); // Stop blinking
+  led.unexport();    // Unexport GPIO and free resources
+}, 5000);
