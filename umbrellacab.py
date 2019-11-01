@@ -2,6 +2,27 @@ from datetime import datetime, timedelta
 import requests 
 import os
 from dotenv import load_dotenv
+import RPi.GPIO as GPIO
+
+IO.setwarnings(False)
+IO.setmode (GPIO.BCM)
+
+null = [0,0,0,0,0,0,0]
+zero = [1,1,1,1,1,1,0]
+one = [0,1,1,0,0,0,0]
+two = [1,1,0,1,1,0,1]
+three = [1,1,1,1,0,0,1]
+four = [0,1,1,0,0,1,1]
+five = [1,0,1,1,0,1,1]
+six = [1,0,1,1,1,1,1]
+seven = [1,1,1,0,0,0,0]
+eight = [1,1,1,1,1,1,1]
+nine = [1,1,1,1,0,1,1]
+
+segment7 = (19,26,20,21,16,13,6)
+for segment in segment8:
+    GPIO.setup(segment, GPIO.OUT)
+    GPIO.output(segment, 0)
 
 load_dotenv()
 WEATHER = os.getenv('WEATHER')
@@ -20,7 +41,6 @@ def get_sunset():
     now = datetime.now()
 
     tdelta = formatted - now
-
     print(tdelta)
 
 get_sunset()
