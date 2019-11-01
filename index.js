@@ -1,5 +1,6 @@
-const Gpio = require('onoff').Gpio
+
 const fetch = require('node-fetch')
+
 require('dotenv').config()
 
 let rain, snow
@@ -13,19 +14,30 @@ const getWeather = async () =>{
         if(el.snow != undefined){snow = true}
     }
     )
-    console.log(rain)
+    day.forEach(el => console.log(el.rain))
 }
 
-getWeather()
+// getWeather()
 
-const Gpio = require('../onoff').Gpio; // Gpio class
-const led = new Gpio(17, 'out');       // Export GPIO17 as an output
+let sunlight 
 
-// Toggle the state of the LED connected to GPIO17 every 200ms
-const iv = setInterval(_ => led.writeSync(led.readSync() ^ 1), 200);
+let now = new Date(Date.now())
+let minSunLeft
 
-// Stop blinking the LED after 5 seconds
-setTimeout(_ => {
-  clearInterval(iv); // Stop blinking
-  led.unexport();    // Unexport GPIO and free resources
-}, 5000);
+
+const getSunset = async () =>{
+    let res = await fetch('https://api.sunrise-sunset.org/json?lat=51.551243&lng=-0.226804&formatted=0')
+    let data = await res.json()
+    let sunset  = new Date( data.results.sunset)
+    
+    minSunLeft = sunset - now
+    console.log(((minSunLeft / (1000 * 60)).toFixed(0)))
+
+}
+  
+const displaySunLeft =  () => {
+    while(minSunLeft >= 0){
+
+    }
+}
+  
