@@ -53,20 +53,73 @@ let s5 = new Gpio(16, {mode: Gpio.OUTPUT})
 let s6 = new Gpio(13, {mode: Gpio.OUTPUT})
 let s7 = new Gpio(6, {mode: Gpio.OUTPUT})
 
-
-
-function switchAtRandom(){
- let onoff = [255, 0]
+ let zero = [1,1,1,1,1,1,0]
+ let one =  [0,0,0,0,1,1,0]
+ let two =  [1,1,0,1,1,0,1]
+ let three =[1,0,0,1,1,1,1] 
+ let four = [0,0,1,0,1,1,1]
+ let five = [1,0,1,1,0,1,1]
+ let six =  [1,1,1,1,0,1,1]
+ let seven =[0,0,1,1,1,1,0]
+ let eight =[1,1,1,1,1,1,1]
+ let nine = [1,0,1,1,1,1,1]
  const segments = [s1, s2, s3, s4,s5,s6,s7]
- segments.forEach(el => el.pwmWrite(onoff[Math.floor((Math.random()*2))]))
- d1.pwmWrite(onoff[Math.floor((Math.random() * 2))])
- d2.pwmWrite(onoff[Math.floor((Math.random() * 2))])
- d3.pwmWrite(onoff[Math.floor((Math.random() * 2))])
- d4.pwmWrite(onoff[Math.floor((Math.random() * 2))])
-
+ d2.digitalWrite(1)
+ d3.digitalWrite(1)
+ d4.digitalWrite(1)
+ const allNums = [zero,one,two,three,four,five,six,seven,eight,nine]
+ 
+ const showD1 = () => {
+   d2.digitalWrite(1)  
+   d3.digitalWrite(1)
+   d4.digitalWrite(1)
+   d1.digitalWrite(0)
+   for(let i = 0; i < segments.length; i++){
+   segments[i].digitalWrite(one[i])
+   }
+}
+ const showD2 = () => {
+   d1.digitalWrite(1)
+   d3.digitalWrite(1)
+   d4.digitalWrite(1)
+   d2.digitalWrite(0) 
+   for(let i = 0; i < segments.length; i++){
+   segments[i].digitalWrite(two[i])
+   }
 }
 
-setInterval(switchAtRandom, 20)
+ const showD3 = () => {
+   d1.digitalWrite(1)
+   d2.digitalWrite(1)
+   d4.digitalWrite(1)
+   d3.digitalWrite(0)
+   for(let i = 0; i < segments.length; i++){
+   segments[i].digitalWrite(three[i])
+   }
+}
+
+ const showD4 = () => {
+   d1.digitalWrite(1)
+   d2.digitalWrite(1)
+   d3.digitalWrite(1)
+   d4.digitalWrite(0)
+   for(let i = 0; i < segments.length; i++){
+   segments[i].digitalWrite(four[i])
+   }
+}
+ const cycleStep1Step2 = () =>{
+   
+   showD1()
+   setTimeout(showD2, 3)
+   setTimeout(showD3, 6)
+   setTimeout(showD4, 9)
+}
+
+
+setInterval(cycleStep1Step2, 12)
+
+const x = () => console.log('hey')
+setInterval(x, 1000)
 
 
 const showLed = () => {
