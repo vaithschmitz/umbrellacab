@@ -58,6 +58,9 @@ const getWeather = async () => {
   // weather display function
 };
 
+getWeather() 
+setInterval(getWeather, 3600000) //every hour 
+
 // get sunset time in min, if > 0 call conversion to segments, else write array of 0s to d1-d4
 const getSunset = async () => {
   let res = await fetch(
@@ -83,7 +86,8 @@ const getSunset = async () => {
     }
   }
 };
-
+// call on run
+getSunset()
 // every 3 hours
 setInterval(getSunset, 10000000);
 
@@ -183,13 +187,13 @@ const showD4 = x => {
 };
 const cycleSegments = () => {
   showD1();
-  setTimeout(showD2, 3);
-  setTimeout(showD3, 6);
-  setTimeout(showD4, 9);
+  setTimeout(showD2, 4);
+  setTimeout(showD3, 8);
+  setTimeout(showD4, 12);
 };
 
 // 12 ms for full refresh of 4 digits
-const digitWriteLoop = () => setInterval(cycleSegments, 12);
+const digitWriteLoop = () => setInterval(cycleSegments, 16);
 
 const showLed = () => {
   if (rain) {
